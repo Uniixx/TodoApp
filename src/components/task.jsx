@@ -17,8 +17,15 @@ const Container = styled.div`
 
 export default class Task extends React.Component {
   render() {
+    const {id, color, title, description, creation_date} = this.props.task;
+    const isFuture = new Date(creation_date) > new Date();
+    const style = {
+      header: {
+        "background": color !== "" ? color : ""
+      }
+    }
     return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
+      <Draggable isDragDisabled={isFuture} draggableId={id} index={this.props.index}>
         {provided => (
           <Container
             {...provided.draggableProps}
@@ -26,10 +33,15 @@ export default class Task extends React.Component {
             ref={provided.innerRef}
           >
             <Card>
-              <Card.Content header={this.props.task.title} />
-              <Card.Content>{this.props.task.description}</Card.Content>
+              <Card.Content style={style.header} header={title} />
+              <Card.Content>{description}</Card.Content>
               <Card.Content extra>
-                Began: <Moment fromNow>{this.props.task.creation_date}</Moment>
+              { 
+                isFuture ? "Beggining " : "Began "  
+              }
+              {
+                <Moment fromNow>{ creation_date }</Moment> 
+              }
               </Card.Content>
             </Card>
           </Container>
