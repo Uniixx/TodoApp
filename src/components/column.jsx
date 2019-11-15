@@ -25,9 +25,9 @@ export default class Column extends React.Component {
     return (
       <Container>
         <Card>
-          <Card.Content header={this.props.column.title} />
+          <Card.Content header={this.props.column.name} />
           <Card.Content>
-            <Droppable droppableId={this.props.column.id}>
+            <Droppable droppableId={this.props.column.name}>
               {(provided, snapshot) => (
                 <TaskList ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
                   {this.props.tasks.map((task, index) => (
